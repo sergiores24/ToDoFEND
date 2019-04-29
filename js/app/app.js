@@ -1,13 +1,10 @@
 var ToDoApp = angular.module('ToDoApp', [
     'ngRoute',
     'ToDoAppServices',
-    'ToDoAppControllers',
-    'satellizer',
-    'ngFileUpload',
-    'uiGmapgoogle-maps',
-    'angular-loading-bar',
-	'datatables'
+    'ToDoAppControllers'
 ]);
+
+ToDoApp.constant('api_url','http://localhost:3000/api');
 
 ToDoApp.config(function($routeProvider) {
 
