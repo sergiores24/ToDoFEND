@@ -29,7 +29,7 @@ controllerModule.controller('homeController',
     		if($scope.taskForm.$valid && $scope.divTask){
     			$scope.task.groupId=$scope.selectedGroup._id;
     			taskService.createTask($scope.task).then(function(response){
-    				$scope.tasksGroup={};
+    				$scope.tasks={};
     				$scope.divTask=false;
     				$scope.taskForm.$submitted=false;
     				getTasksGroups();
@@ -39,12 +39,20 @@ controllerModule.controller('homeController',
 
     	$scope.toggledivGroup=function(){
     		$scope.divGroup=!$scope.divGroup;
+    		if(!$scope.divGroup){
+    			$scope.tasksGroup={};
+    			$scope.tasksGroupForm.$submitted=false;
+    		}
     	};
 
     	$scope.toggledivTask=function(group){
     		$scope.divTask=!$scope.divTask;
     		if($scope.divTask){
     			$scope.selectedGroup=group;
-    		}else{$scope.selectedGroup={};}
+    		}else{
+    			$scope.tasks={};
+    			$scope.selectedGroup={};
+    			$scope.taskForm.$submitted=false;
+    		}
     	};
 });
