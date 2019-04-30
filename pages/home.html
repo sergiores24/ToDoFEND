@@ -9,20 +9,75 @@
 					</div>
           <div class="row">
 						<div class="card-body col-md-10 bg-light text-dark"><h4 class="text-center">Activities</h4></div>
-            <div class="card-body col-md-2 bg-light text-dark"><button class="btn btn-secondary" ng-click="toggledivGroup()">Create a Tasks group</button></div>
+            <div class="card-body col-md-2 bg-light text-dark"><button class="btn btn-secondary" ng-click="tasksGroupModal()">Create a Tasks group</button></div>
           </div>
 				</div>
 			</div>
     </div>
 
-    <form id="taskForm" name="taskForm" ng-submit="createTask()" novalidate>
-      <div class="row" ng-show="divTask">
+    <div class="row">
+      <div class="col-md-3" ng-repeat="group in tgroups">
+        <div class="card o-hidden h-100">
+          <div class="card-head bg-success">
+            <div class="card-body-icon">
+              <i class="fas fa-fw fa-group"></i>
+            </div>
+            <div class="row">
+              <div class="col-sm-8"><h2>{{group.name}}</h2></div>
+              <div class="col-sm-4">
+                <button class="btn btn-success" ng-click="taskModal(group)"><span class="glyphicon glyphicon-tasks"></span> Add task</button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body bg-light">
+            <div ng-repeat="task in group.tasks"><span class="glyphicon glyphicon-asterisk"></span> {{task.name}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+	</body>
+
+<script type="text/ng-template" id="tasksGroup.html">
+  <div class="row">
+      <div class="col-lg-12 bg-secondary text-white">
+        <form id="tasksGroupForm" name="tasksGroupForm" ng-submit="createTasksGroup()" novalidate>
+          <div class="panel panel-default bg-secondary">
+            <div class="panel-body bg-secondary">
+              <h3>New tasks group</h3>
+              <div class="form-group">
+                <label>Group name:</label>
+                <input class="form-control" name="groupname" placeholder="Enter group's name" ng-model="tasksGroup.name" required>
+                <div ng-show="!tasksGroup.name && tasksGroupForm.$submitted" class="alert alert-warning">
+                  This field is required!
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Description:</label>
+                <input class="form-control" name="description" placeholder="Enter group's description (Optional)" ng-model="tasksGroup.description">
+              </div>
+
+              <div class="form-group" align="left" style="margin-right: 1em;">
+                <input class="btn btn-success btn-lg" type="submit" value="Create"/>            
+              </div>
+
+            </div>
+
+          </div>
+        </form>
+      </div>
+  </div>
+  </script>
+
+<script type="text/ng-template" id="task.html">
+  <div class="row">
+      <form id="taskForm" name="taskForm" ng-submit="createTask()" novalidate>
         <div class="col-lg-12 bg-secondary text-white">
           <div class="row">
             <div class="col-md-6">
               <div class="panel panel-default bg-secondary">
                 <div class="panel-body bg-secondary">
-                  <h3>New task for group: {{selectedGroup.name}}</h3>
+                  <h3>New task for group: {{group.name}}</h3>
                   <div class="form-group">
                     <label>Task name:</label>
                     <input class="form-control" name="taskname" placeholder="Enter task name" ng-model="task.name" required>
@@ -46,7 +101,7 @@
                       <div class="btn btn-success" ng-click="toggledivUser()">Add new User</div>
                     </div>
                   </div>
-                  <div class="row" ng-show="divUser">
+                  <!--<div class="row" ng-show="divUser">
                     <div class="col-md-12">
                         <div class="panel panel-default bg-secondary">
                           <div class="panel-body bg-secondary">
@@ -78,8 +133,8 @@
 
                         </div>
                     </div>
-                  </div>
-                  <p ng-if="users.length===0">No user is available</p>
+                  </div>-->
+                  <p ng-if="users.length===0">No users available</p>
                   <div ng-repeat="user in users">
                     <h6><span class="glyphicon glyphicon-asterisk"></span> Name: {{user.name}} {{user.surname}}</h6>
                     <p ng-if="user.email">Email: {{user.email}}</p>
@@ -96,61 +151,8 @@
             </div>
           </div>
         </div>
-      </div>
-    </form>
-    <div class="row">
-      <div class="col-md-3" ng-repeat="group in tgroups">
-        <div class="card o-hidden h-100">
-          <div class="card-head bg-success">
-            <div class="card-body-icon">
-              <i class="fas fa-fw fa-group"></i>
-            </div>
-            <div class="row">
-              <div class="col-sm-8"><h2>{{group.name}}</h2></div>
-              <div class="col-sm-4">
-                <button class="btn btn-success" ng-click="toggledivTask(group)"><span class="glyphicon glyphicon-tasks"></span> Add task</button>
-              </div>
-            </div>
-          </div>
-          <div class="card-body bg-light">
-            <div ng-repeat="task in group.tasks"><span class="glyphicon glyphicon-asterisk"></span> {{task.name}}</div>
-          </div>
-        </div>
-      </div>
+      </form>
     </div>
-	</body>
+</script>
 
-<script type="text/ng-template" id="tasksGroup.html">
-  <div class="row">
-    <div class="col-md-5">
-      <div class="col-lg-12 bg-secondary text-white">
-        <form id="tasksGroupForm" name="tasksGroupForm" ng-submit="createTasksGroup()" novalidate>
-          <div class="panel panel-default bg-secondary">
-            <div class="panel-body bg-secondary">
-              <h3>New tasks group</h3>
-              <div class="form-group">
-                <label>Group name:</label>
-                <input class="form-control" name="groupname" placeholder="Enter group's name" ng-model="tasksGroup.name" required>
-                <div ng-show="!tasksGroup.name && tasksGroupForm.$submitted" class="alert alert-warning">
-                  This field is required!
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label>Description:</label>
-                <input class="form-control" name="description" placeholder="Enter group's description (Optional)" ng-model="tasksGroup.description">
-              </div>
-
-              <div class="form-group" align="left" style="margin-right: 1em;">
-                <input class="btn btn-success btn-lg" type="submit" value="Create"/>            
-              </div>
-
-            </div>
-
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  </script>
 </html>
