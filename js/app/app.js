@@ -1,7 +1,8 @@
 var ToDoApp = angular.module('ToDoApp', [
     'ngRoute',
     'ToDoAppServices',
-    'ToDoAppControllers'
+    'ToDoAppControllers',
+    'ui.bootstrap'
 ]);
 
 ToDoApp.constant('api_url','http://localhost:3000/api');
