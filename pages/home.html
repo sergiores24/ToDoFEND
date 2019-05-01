@@ -28,22 +28,30 @@
                 <p ng-if="group.description">{{group.description}}</p>
               </div>
               <div class="col-sm-4">
-                <button class="btn btn-success" ng-click="taskModal(group)"><span class="glyphicon glyphicon-tasks"></span> Add task</button>
+                <div class="center-block">
+                  <button class="btn btn-success btn-sm" ng-click="taskCreateModal(group)"><span class="glyphicon glyphicon-tasks"></span> Add task</button>
+                </div>
               </div>
             </div>
           </div>
           <div class="card-body bg-light">
-            <div ng-repeat="task in group.tasks">
-              <span class="glyphicon glyphicon-asterisk"></span> {{task.name}}
+            <div class="row" ng-repeat="task in group.tasks">
+              <div class="col-md-8">
+                <span class="glyphicon glyphicon-asterisk"></span> <b>{{task.name}}</b>
+                <p>Status: {{task.status}} 
+                  <span ng-if="task.status=='Open'" class="badge bg-danger">O</span>
+                  <span ng-if="task.status=='In-Progress'" class="badge bg-info">I</span>
+                  <span ng-if="task.status=='Completed'" class="badge bg-success">C</span>
+                  <span ng-if="task.status=='Archived'" class="badge bg-dark text-white">A</span>
+                </p>
+              </div>
+              <div class="col-md-4">
+                <button ng-click="taskModal(task)" class="btn btn-info btn-sm">Details</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 	</body>
-
-<script type="text/ng-template" src="pages/modals/tasksGroup.html"></script>
-<script type="text/ng-template" src="pages/modals/taskModal.html"></script>
-
-
 </html>

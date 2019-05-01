@@ -1,0 +1,70 @@
+<div class="row">
+	<div class="col-lg-12 bg-light">
+		<div class="panel panel-info ">
+			<div class="panel-heading">
+				<h3>Task: {{task.name}}</h3>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-lg-4">
+						<h4 ng-if="!modifyStatus">Task status: {{task.status}} 
+						<span ng-if="task.status=='Open'" class="badge bg-danger">O</span>
+		        <span ng-if="task.status=='In-Progress'" class="badge bg-info">I</span>
+		        <span ng-if="task.status=='Completed'" class="badge bg-success">C</span>
+		        <span ng-if="task.status=='Archived'" class="badge bg-dark text-white">A</span></h4>
+		        <h4 ng-if="modifyStatus">New status: </h4>
+		        <br>
+		        <select ng-show="modifyStatus" ng-options="status as status.name for status in statusOps track by status.id" ng-model="newStatus">
+		        	<option value="">Choose status</option>
+		        </select>
+					</div>
+					<div class="col-lg-4">
+						<div align="left">
+	        		<button class="btn btn-warning btn-sm" ng-show="!modifyStatus" ng-click="togglemodifyStatus()"><span class="glyphicon glyphicon-pencil"> Modify status</span></button>
+	        		<button class="btn btn-success btn-sm" ng-show="modifyStatus" ng-click="changeStatus()"><span class="glyphicon glyphicon-pencil"> Apply changes</span></button>
+	        	</div>
+					</div>
+				</div>
+        <div class="row">
+        	<div class="col-lg-4">
+	        	<h4>Assigned users:</h4>
+	        </div>
+	        <div class="col-lg-4">
+	        	<div align="left">
+	        		<button class="btn btn-success btn-sm" ng-show="!modifyUsers" ng-click="togglemodifyUsers()"><span class="glyphicon glyphicon-user"> Modify users</span></button>
+	        		<button class="btn btn-danger btn-sm" ng-show="modifyUsers" ng-click="togglemodifyUsers()"><span class="glyphicon glyphicon-user"> Modify users</span></button>
+	        	</div>
+	        </div>
+        </div>
+        <div class="row" ng-if="taskUsers.length!=0">
+        	<div class="col-lg-4" ng-repeat="user in taskUsers">
+        		<div class="panel-body">
+              <h5><span class="glyphicon glyphicon-asterisk"></span> Name: {{user.fullName}}</h5>
+              <p ng-if="user.email">Email: {{user.email}}</p>
+              <a href="" ng-click="removeFromUsersList($index)" ng-if="modifyUsers"><span class="glyphicon glyphicon-minus" style="color:red;"></span></a>
+            </div>
+        	</div>
+        </div>
+        <h6 ng-if="taskUsers.length==0 && !modifyUsers">No user is assigned</h6>
+        <div class="row" ng-if="modifyUsers">
+        	<div class="row">
+        		<div class="col-md-9">
+              <h4>Available users:</h4>
+              <div><label>Search:</label> <input type="text" ng-model="search.fullName"></div>
+            </div>
+          </div>
+          <p ng-if="users.length===0">No users available</p>
+          <div class="row">
+            <div class="col-md-4" ng-repeat="user in users | filter:search">
+              <div class="panel-body">
+          	    <h5><span class="glyphicon glyphicon-asterisk"></span> Name: {{user.fullName}}</h5>
+            	  <p ng-if="user.email">Email: {{user.email}}</p>
+                <a href="" ng-click="addToUsersList(user.index)"><span class="glyphicon glyphicon-plus" style="color:green; align:right;"></span></a>
+              </div>
+          	</div>
+          </div>
+        </div>
+			</div>
+		</div>
+	</div>
+</div>
