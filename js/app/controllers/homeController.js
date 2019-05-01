@@ -58,6 +58,7 @@ controllerModule.controller('homeController',
             animation: true,
             templateUrl: 'task.html',
             controller: 'taskModalController',
+            size:'lg',
             resolve: {
               group: function(){
                 return group;
@@ -67,14 +68,6 @@ controllerModule.controller('homeController',
         modalInstance.result.then(function(){
           getTasksGroups();
         });
-      };
-
-      $scope.toggledivUser=function(){
-        $scope.divUser=!$scope.divUser;
-        if(!$scope.divUser){
-          $scope.user={};
-          $scope.sentUser=false;
-        }
       };
 });
 
@@ -90,7 +83,16 @@ controllerModule.controller('tGroupController',function($scope,tasksGroupService
 
 controllerModule.controller('taskModalController',function($scope,taskService,$uibModalInstance,group){
   $scope.group=group;
-  console.log($scope.group);
+  $scope.divUser=false;
+
+  $scope.toggledivUser=function(){
+        $scope.divUser=!$scope.divUser;
+        if(!$scope.divUser){
+          $scope.user={};
+          $scope.sentUser=false;
+        }
+      };
+
   $scope.createTask=function(){
     if($scope.taskForm.$valid){
       $scope.task.groupId=$scope.selectedGroup._id;
