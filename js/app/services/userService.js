@@ -8,7 +8,7 @@ servicesModule.factory('userService', function ($http,api_url) {
     		return $http.get(baseUrl+'/user/getall');
     	},
     	createUser: function(tasksGroup){
-    		return $http.post(baseUrl+'/user/create',tasksGroup,[headers]);
+    		return $http.post(baseUrl+'/user/register',tasksGroup,[headers]);
     	}
     };
 });

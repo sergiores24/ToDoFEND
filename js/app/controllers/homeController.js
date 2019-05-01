@@ -32,20 +32,10 @@ controllerModule.controller('homeController',
           }
         }
 
-        $scope.addToUsersList=function(index){
-            $scope.task.users.push($users[index]._id);
-            $scope.users.splice(index,1);
-        };
-
-        $scope.removeFromUsersList=function(index){
-            $scope.users.push($scope.task.users[index]);
-            $scope.task.users.splice(index,1);
-        };
-
       $scope.tasksGroupModal = function(){
         var modalInstance = $uibModal.open({
             animation: true,
-            templateUrl: 'tasksGroup.html',
+            templateUrl: 'pages/modals/tasksGroup.html',
             controller: 'tGroupController'
           });
         modalInstance.result.then(function(){
@@ -56,7 +46,7 @@ controllerModule.controller('homeController',
       $scope.taskModal = function(group){
         var modalInstance = $uibModal.open({
             animation: true,
-            templateUrl: 'task.html',
+            templateUrl: 'pages/modals/taskModal.html',
             controller: 'taskModalController',
             size:'lg',
             resolve: {
@@ -71,7 +61,8 @@ controllerModule.controller('homeController',
       };
 });
 
-controllerModule.controller('tGroupController',function($scope,tasksGroupService,$uibModalInstance){
+controllerModule.controller('tGroupController',
+function($scope,tasksGroupService,$uibModalInstance){
   $scope.createTasksGroup=function(){
     if($scope.tasksGroupForm.$valid){
       tasksGroupService.createTasksGroup($scope.tasksGroup).then(function(response){
@@ -81,9 +72,20 @@ controllerModule.controller('tGroupController',function($scope,tasksGroupService
   };
 });
 
-controllerModule.controller('taskModalController',function($scope,taskService,$uibModalInstance,group){
+controllerModule.controller('taskModalController',
+function($scope,taskService,userService,$uibModalInstance,group){
   $scope.group=group;
   $scope.divUser=false;
+  $scope.task={users:[]};
+  $scope.selectedUsers=[];
+
+  var getUsers=function(){
+  	userService.getUsers().then(function(response){
+  		$scope.users=response.data;
+  	});
+  }
+
+  getUsers();
 
   $scope.toggledivUser=function(){
         $scope.divUser=!$scope.divUser;
@@ -93,12 +95,35 @@ controllerModule.controller('taskModalController',function($scope,taskService,$u
         }
       };
 
-  $scope.createTask=function(){
+	$scope.createTask=function(){
     if($scope.taskForm.$valid){
-      $scope.task.groupId=$scope.selectedGroup._id;
+      $scope.task.groupId=$scope.group._id;
+      angular.forEach($scope.selectedUsers,function(val,i){
+      	$scope.task.users.push(val._id);
+      });
       taskService.createTask($scope.task).then(function(response){
         $uibModalInstance.close();
       });
     }
   };
+
+  $scope.createUser=function(){
+  	if($scope.userForm.$valid){
+  		userService.createUser($scope.user).then(function(response){
+  			$scope.divUser=false;
+  			getUsers();
+  		});
+  	}
+  };
+
+  $scope.addToUsersList=function(index){
+    $scope.selectedUsers.push($scope.users[index]);
+    $scope.users.splice(index,1);
+	};
+
+  $scope.removeFromUsersList=function(index){
+    $scope.users.push($scope.selectedUsers[index]);
+    $scope.selectedUsers.splice(index,1);
+  };
+
 });
