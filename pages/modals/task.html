@@ -20,8 +20,9 @@
 					</div>
 					<div class="col-lg-4">
 						<div align="left">
-	        		<button class="btn btn-warning btn-sm" ng-show="!modifyStatus" ng-click="togglemodifyStatus()"><span class="glyphicon glyphicon-pencil"> Modify status</span></button>
-	        		<button class="btn btn-success btn-sm" ng-show="modifyStatus" ng-click="changeStatus()"><span class="glyphicon glyphicon-pencil"> Apply changes</span></button>
+	        		<button class="btn btn-warning btn-sm" ng-show="!modifyStatus" ng-click="togglemodifyStatus()"><span class="glyphicon glyphicon-pencil"></span> Modify status</button>
+	        		<button class="btn btn-success btn-sm" ng-show="modifyStatus" ng-click="changeStatus()"><span class="glyphicon glyphicon-pencil"></span> Apply changes</button>
+	        		<button class="btn btn-danger btn-sm" ng-show="modifyStatus" ng-click="togglemodifyStatus()">Cancel</button>
 	        	</div>
 					</div>
 				</div>
@@ -32,7 +33,7 @@
 	        <div class="col-lg-4">
 	        	<div align="left">
 	        		<button class="btn btn-success btn-sm" ng-show="!modifyUsers" ng-click="togglemodifyUsers()"><span class="glyphicon glyphicon-user"> Modify users</span></button>
-	        		<button class="btn btn-danger btn-sm" ng-show="modifyUsers" ng-click="togglemodifyUsers()"><span class="glyphicon glyphicon-user"> Modify users</span></button>
+	        		<button class="btn btn-danger btn-sm" ng-show="modifyUsers" ng-click="togglemodifyUsers()"><span class="glyphicon glyphicon-user"> Stop modifying users</span></button>
 	        	</div>
 	        </div>
         </div>
@@ -46,7 +47,7 @@
         	</div>
         </div>
         <h6 ng-if="taskUsers.length==0 && !modifyUsers">No user is assigned</h6>
-        <div class="row" ng-if="modifyUsers">
+        <div class="col-lg-12" ng-if="modifyUsers">
         	<div class="row">
         		<div class="col-md-9">
               <h4>Available users:</h4>

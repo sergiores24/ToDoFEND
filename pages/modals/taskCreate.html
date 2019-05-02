@@ -16,11 +16,10 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-12" ng-show="!divUser">
+            <div class="col-md-12">
               <div class="panel panel-default bg-light">
                 <div class="panel-body bg-light" style="overflow: auto;">
                   <h3>Add users to task</h3>
-                  <div class="btn btn-success right" ng-click="toggledivUser()">Add new User</div>
                   <div class="row">
                     <div class="col-md-9">
                       <h4>Available users:</h4>
@@ -62,41 +61,5 @@
             </div>
           </div>
         </form>
-      </div>
-      <div class="row" ng-show="divUser">
-        <div class="col-md-12">
-          <form id="userForm" name="userForm" ng-submit="createUser()" novalidate>
-            <div class="panel panel-default bg-light">
-              <div class="panel-body bg-light">
-                <h3>New user</h3>
-                <div class="form-group">
-                  <label>Name:</label>
-                  <input class="form-control" name="name" placeholder="Enter name" ng-model="user.name">
-                  <div ng-show="!user.name && sentUser" class="alert alert-warning">
-                    This field is required!
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label>Surname:</label>
-                  <input class="form-control" name="surname" placeholder="Enter surname" ng-model="user.surname">
-                  <div ng-show="!user.surname && sentUser" class="alert alert-warning">
-                    This field is required!
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label>Email:</label>
-                  <input class="form-control" name="email" type="email" placeholder="Email (optional)" ng-model="user.email">
-                </div>
-
-                  <button type="submit" class="btn btn-success btn-lg">Create user</button>
-
-              </div>
-
-            </div>
-          </form>
-          <button class="btn btn-danger" ng-click="toggledivUser()">Cancel</button>
-        </div>
       </div>
     </div>
