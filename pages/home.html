@@ -17,6 +17,9 @@
     </div>
 
     <div class="row">
+      <div ng-if="tgroups.length==0" class="col-lg-12">
+        <h2 style="text-align: center;">There is no Tasks group yet.</h2>
+      </div>
       <div class="col-md-4" ng-repeat="group in tgroups">
         <div class="card o-hidden h-100">
           <div class="card-head bg-success">

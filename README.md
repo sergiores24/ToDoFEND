@@ -9,3 +9,14 @@ Mount a web server an access to the index.html file.
 You can use an http server like [http-server](https://www.npmjs.com/package/http-server) available in npm
 
 The API url can be setted in "app.js" file located at js/app/
+
+
+This project was made with:
+-Bootsrap 3
+-AngularJS
+
+Libraries:
+-UI Bootstrap
+
+Bootstrap Template:
+- [SB-Admin](https://startbootstrap.com/templates/sb-admin/)
