@@ -28,6 +28,7 @@ function($scope,taskService,userService,$uibModalInstance,group){
     }
   };
 
+/*----------Add or Remove user's ID to task.users-----------*/
   $scope.addToUsersList=function(index){
     $scope.selectedUsers.push($scope.users[index]);
     $scope.users.splice(index,1);

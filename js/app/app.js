@@ -1,9 +1,13 @@
+//Defining AngularJS App
+
+//App modules
 var ToDoApp = angular.module('ToDoApp', [
     'ngRoute',
     'ToDoAppServices',
     'ToDoAppControllers',
-    'ui.bootstrap'
+    'ui.bootstrap' //UI Bootstrap Library
 ]);
+
 
 ToDoApp.constant('api_url','http://localhost:3000/api');
 

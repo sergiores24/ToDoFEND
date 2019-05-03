@@ -2,7 +2,7 @@ var controllerModule = angular.module('ToDoAppControllers');
 
 controllerModule.controller('homeController',
     function ($scope,tasksGroupService,taskService,userService,$uibModal) {
-    	$scope.tgroups=[];
+      $scope.tgroups=[];
 
     	var getTasksGroups=function(){
     		tasksGroupService.getTasksGroups().then(function(response){
@@ -10,24 +10,12 @@ controllerModule.controller('homeController',
     		});
     	};
 
-      var getUsers=function(){
-        userService.getUsers().then(function(res){
-                $scope.users=res.data;
-        });
-      }
-
-      $scope.createUser=function(){
-
-        var valid= $scope.user.name!=null && $scope.user.surname!=null
-        if(valid){
-            taskService.createTask($scope.user).then(function(response){
-                getUsers();
-            })
-        }
-      }
-
+      //Initial request
       getTasksGroups();
 
+/*---------Opening modal functions------------*/
+
+      //Modal for Creating users
       $scope.userModal=function(){
         modalInstance=$uibModal.open({
           animation: true,
@@ -37,6 +25,7 @@ controllerModule.controller('homeController',
         });
       }
 
+      //Open modal for Task details
       $scope.taskModal = function(task){
         var modalInstance = $uibModal.open({
             animation: true,
@@ -54,6 +43,7 @@ controllerModule.controller('homeController',
         });
       };
 
+      //Open modal for creating tasks group
       $scope.tasksGroupModal = function(){
         var modalInstance = $uibModal.open({
             animation: true,
@@ -65,6 +55,7 @@ controllerModule.controller('homeController',
         });
       }
 
+      //Open modal to creating new Task
       $scope.taskCreateModal = function(group){
         var modalInstance = $uibModal.open({
             animation: true,

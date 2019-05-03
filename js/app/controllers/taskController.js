@@ -1,7 +1,7 @@
 controllerModule.controller('taskController',
 function($scope,task,taskService,userService,$uibModalInstance){
-	$scope.modifyUsers=false;
-	$scope.modifyStatus=false;
+	$scope.modifyUsers=false; //Boolean to enable assignes users editig
+	$scope.modifyStatus=false;//Boolean to enable Task status editing
 	$scope.task=task;
 	$scope.taskUsers=[];
 	$scope.users=[];
@@ -11,6 +11,7 @@ function($scope,task,taskService,userService,$uibModalInstance){
 	{id:2,name:'Completed'},
 	{id:3,name:'Archived'}];
 	
+  //Get all users except the ones that have this task assigned
 	var getUsers=function(){
 		userService.getUsers($scope.task.users).then(function(response){
 			$scope.users=response.data;
@@ -21,6 +22,7 @@ function($scope,task,taskService,userService,$uibModalInstance){
 		});
 	};
 
+  //Get users that have this task assigned
 	var getTaskUsers= function(){
 		taskService.getUsers(task._id).then(function(response){
 			$scope.taskUsers=response.data;
@@ -29,16 +31,15 @@ function($scope,task,taskService,userService,$uibModalInstance){
   		});
 		});
 	};
+
 	getTaskUsers();
 
 	$scope.togglemodifyUsers=function(){
     $scope.modifyUsers=!$scope.modifyUsers;
-    if(!$scope.modifyUsers){
-      $scope.user={};
-    } else{
-    	if($scope.users.length==0){
+
+    //Send request only the first time
+    	if($scope.modifyUsers&&$scope.users.length==0){
     		getUsers();
-    	}
     }
   };
 
@@ -46,9 +47,11 @@ function($scope,task,taskService,userService,$uibModalInstance){
     $scope.modifyStatus=!$scope.modifyStatus;
   };
 
+
+  //send updating status request
   $scope.changeStatus=function(){
   	if(!$scope.newStatus){
-  		alert('Choose a valid status');
+  		alert('Choose an option');
   	} else{
   		var status={status: $scope.newStatus.name,taskId: task._id};
   		taskService.setStatus(status).then(function(response){
@@ -60,6 +63,7 @@ function($scope,task,taskService,userService,$uibModalInstance){
 
   }
 
+/*---------Adding and removing users to the task----------*/
   $scope.addToUsersList=function(index){
   	var ids={
   		taskId:task._id,
